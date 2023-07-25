@@ -8,6 +8,7 @@ namespace BasicWorkerService
 		private readonly ILogger<Worker> _logger;
 		private readonly IHubContext<StockHub, IStockService> _stockHub;
 		private const string stockName = "Basic Stock Name";
+		private const decimal stockPrice = 100;
 
 		public Worker(ILogger<Worker> logger, IHubContext<StockHub, IStockService> stockHub)
 		{
@@ -20,8 +21,9 @@ namespace BasicWorkerService
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				_logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-				Random random = new Random();
-				decimal stockPrice = random.Next(1, 100);
+
+				//do some stock works
+
 				await _stockHub.Clients.All.SendStockPrice(stockName, stockPrice);
 				await Task.Delay(1000, stoppingToken);
 			}
