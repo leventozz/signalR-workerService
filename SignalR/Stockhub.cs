@@ -6,7 +6,7 @@ namespace SignalR
 	{
 		public async Task SendStockPrice(string stockName, decimal price)
 		{
-			await Clients.Others.SendAsync("ReceiveStockPrice",stockName, price);
+			await Clients.All.SendAsync("ReceiveStockPrice",stockName, price);
 		}
 	}
 }
